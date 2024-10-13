@@ -81,6 +81,7 @@ public class GameState {
     private ResourceCount resourceCount;
 
     private BaseData baseData;
+    private EnemyData enemyData = new EnemyData();
     private ScoutData scoutData;
 
     // Initialized in InformationManager

@@ -44,6 +44,7 @@ public class InformationManager {
     private HashSet<Base> expansionBasesSet = new HashSet<>();
     private HashSet<TilePosition> startingBasesTilePositions = new HashSet<>();
 
+    // TODO: Refactor into EnemyData
     private HashSet<Unit> enemyBuildings = new HashSet<>();
     private HashSet<Unit> enemyHostileToGroundBuildings = new HashSet<>();
     private HashSet<Unit> visibleEnemyUnits = new HashSet<>();
@@ -183,6 +184,11 @@ public class InformationManager {
         if (enemyLastKnownLocations.containsKey(unit)) {
             enemyLastKnownLocations.remove(unit);
         }
+
+        EnemyData enemyData = gameState.getEnemyData();;
+        if (!enemyData.isObserved(unit)) {
+            enemyData.newObservedUnit(unit, game.getFrameCount());
+        }
     }
 
     public void onUnitMorph(Unit unit) {
@@ -285,7 +291,11 @@ public class InformationManager {
             updateTechOnDestroy(unitType);
             UnitTypeCount unitCount = gameState.getUnitTypeCount();
             unitCount.removeUnit(unitType);
+            return;
         }
+
+        EnemyData enemyData = gameState.getEnemyData();
+        enemyData.onUnitDestroy(unit);
     }
 
     public boolean isEnemyLocationKnown() {

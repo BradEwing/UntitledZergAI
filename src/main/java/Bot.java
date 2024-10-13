@@ -129,7 +129,6 @@ public class Bot extends DefaultBWListener {
 
     @Override
     public void onEnd(boolean isWinner) {
-        learningManager.onEnd(isWinner);
     }
 
     public static void main(String[] args) {
